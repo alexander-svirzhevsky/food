@@ -1,0 +1,16 @@
+:root {
+  --primary: #fe724c;
+  --white: #fff;
+  --text: #000;
+  --gray: #5b5b5e;
+}
+
+body {
+  font-family: "Open Sans", sans-serif;
+  color: var(--text);
+  font-size: 16px;
+}
+
+button {
+  border: none;
+}
