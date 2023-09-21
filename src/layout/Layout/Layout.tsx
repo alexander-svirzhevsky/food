@@ -1,4 +1,5 @@
-import { Link, Outlet } from "react-router-dom";
+import { NavLink, Outlet } from "react-router-dom";
+import cn from "classnames";
 import styles from "./Layout.module.css";
 import Button from "../../components/Button/Button";
 
@@ -10,27 +11,41 @@ const Layout = () => {
           <img
             className={styles["avatar"]}
             src='/avatar.png'
-            alt='Аватар пользователя'
+            alt='User avatar'
           />
-          <div className={styles["name"]}>Антон Ларичев</div>
-          <div className={styles["email"]}>alari@ya.ru</div>
+          <div className={styles["name"]}>Alexander Svirzhevsky</div>
+          <div className={styles["email"]}>alexander.sv@gmail.com</div>
         </div>
         <div className={styles["menu"]}>
-          <Link to='/' className={styles["link"]}>
-            <img src='/menu-icon.svg' alt='Иконка меню' />
-            Меню
-          </Link>
-          <Link to='/basket' className={styles["link"]}>
-            <img src='/cart-icon.svg' alt='Иконка корзины' />
-            Корзина
-          </Link>
+          <NavLink
+            to='/'
+            className={({ isActive }) =>
+              cn(styles["link"], {
+                [styles["active"]]: isActive,
+              })
+            }
+          >
+            <img src='/menu-icon.svg' alt='Menu icon' />
+            Menu
+          </NavLink>
+          <NavLink
+            to='/basket'
+            className={({ isActive }) =>
+              cn(styles["link"], {
+                [styles["active"]]: isActive,
+              })
+            }
+          >
+            <img src='/cart-icon.svg' alt='Bakset icon' />
+            Basket
+          </NavLink>
         </div>
         <Button className={styles["exit"]}>
-          <img src='/exit-icon.svg' alt='Иконка выхода' />
-          Выход
+          <img src='/exit-icon.svg' alt='Exit icon' />
+          Exit
         </Button>
       </div>
-      <div>
+      <div className={styles["content"]}>
         <Outlet />
       </div>
     </div>

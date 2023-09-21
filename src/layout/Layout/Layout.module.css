@@ -3,6 +3,11 @@
   min-height: 100vh;
 }
 
+.content {
+  width: 100%;
+  padding: 40px 60px;
+}
+
 .sidebar {
   padding: 30px;
   border-right: 1px solid var(--separator-color);
@@ -30,6 +35,10 @@
   gap: 14px;
   text-decoration: none;
   color: var(--text-color);
+}
+
+.active {
+  color: var(--primary);
 }
 
 .user {
