@@ -13,8 +13,8 @@ const Menu = () => {
       <div>
         <ProductCard
           id={1}
-          title='Наслаждение'
-          description='Салями, руккола, помидоры, оливки'
+          title='Product title'
+          description='description of the product'
           rating={4.5}
           price={300}
           image='/product-demo.png'
