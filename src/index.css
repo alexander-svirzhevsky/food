@@ -1,9 +1,11 @@
 :root {
   --primary: #fe724c;
+  --primary-hover: #df6442;
   --white: #fff;
   --text: #000;
   --gray: #5b5b5e;
   --separator-color: #d4d6e0;
+  --text-secondary-color: #5b5b5e;
 }
 
 body {
