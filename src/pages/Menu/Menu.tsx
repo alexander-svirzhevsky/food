@@ -1,9 +1,18 @@
+import { useEffect } from "react";
+
 import styles from "./Menu.module.css";
 import Heading from "../../components/Heading/Heading";
 import Search from "../../components/Search/Search";
-import ProductCard from "../../components/ProductCard/ProductCard";
+import MenuList from "./MenuList/MenuList";
+import useProducts from "../../hooks/useProducts";
 
 const Menu = () => {
+  const { products, isLoading, error, getProducts } = useProducts();
+
+  useEffect(() => {
+    getProducts();
+  }, []);
+
   return (
     <>
       <div className={styles["header"]}>
@@ -11,14 +20,9 @@ const Menu = () => {
         <Search placeholder='Search product' />
       </div>
       <div>
-        <ProductCard
-          id={1}
-          title='Product title'
-          description='description of the product'
-          rating={4.5}
-          price={300}
-          image='/product-demo.png'
-        />
+        {error && <>{error}</>}
+        {isLoading && <>Loading...</>}
+        {!isLoading && <MenuList products={products} />}
       </div>
     </>
   );

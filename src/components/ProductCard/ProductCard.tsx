@@ -3,7 +3,7 @@ import styles from "./ProductCard.module.css";
 
 export interface ProductCardProps {
   id: number;
-  title: string;
+  name: string;
   description: string;
   image: string;
   price: number;
@@ -12,7 +12,7 @@ export interface ProductCardProps {
 
 function ProductCard({
   id,
-  title,
+  name,
   description,
   image,
   price,
@@ -38,7 +38,7 @@ function ProductCard({
           </div>
         </div>
         <div className={styles["footer"]}>
-          <div className={styles["title"]}>{title}</div>
+          <div className={styles["name"]}>{name}</div>
           <div className={styles["description"]}>{description}</div>
         </div>
       </div>
