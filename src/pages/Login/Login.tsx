@@ -3,42 +3,39 @@ import Button from "../../components/Button/Button";
 import Heading from "../../components/Heading/Heading";
 import Input from "../../components/Input/Input";
 import styles from "./Login.module.css";
-import { FormEvent, useState } from "react";
-import { LoginI, ResponsI } from "../../interfaces/login.interface";
-import axios, { AxiosError } from "axios";
-import { BASE_URL } from "../../helpers/API";
+import { FormEvent, useEffect } from "react";
+import { LoginI } from "../../interfaces/login.interface";
+import { useDispatch, useSelector } from "react-redux";
+import { AppDispatch, RootStore } from "../../store/store";
+import { login, userActions } from "../../store/user.slice";
 
 const Login = () => {
-  const [error, setError] = useState<string | null>(null);
   const navigate = useNavigate();
+  const dispatch = useDispatch<AppDispatch>();
+  const { jwt, errorMessage } = useSelector((state: RootStore) => state.user);
 
   const onSubmit = async (e: FormEvent) => {
     e.preventDefault();
+    dispatch(userActions.clearError());
     const { email, password } = e.target as typeof e.target & LoginI;
-    await login(email.value, password.value);
+    await sendData(email.value, password.value);
   };
 
-  const login = async (email: string, password: string) => {
-    try {
-      setError(null);
-      const { data } = await axios.post<ResponsI>(`${BASE_URL}/auth/login`, {
-        email,
-        password,
-      });
-      localStorage.setItem("jwt", data.access_token);
-      navigate("/");
-    } catch (e) {
-      if (e instanceof AxiosError) {
-        setError(e.response?.data.message);
-      }
-    }
+  const sendData = async (email: string, password: string) => {
+    dispatch(login({ email, password }));
   };
+
+  useEffect(() => {
+    if (jwt) {
+      navigate("/");
+    }
+  }, [jwt, navigate]);
 
   return (
     <>
       <div className={styles["content"]}>
         <Heading title='Sign in' />
-        {error && <div className={styles["error"]}>{error}</div>}
+        {errorMessage && <div className={styles["error"]}>{errorMessage}</div>}
         <form className={styles["form"]} onSubmit={onSubmit}>
           <Input
             labelText='Your email'

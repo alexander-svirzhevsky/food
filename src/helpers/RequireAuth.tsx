@@ -1,9 +1,10 @@
 import { ReactNode } from "react";
+import { useSelector } from "react-redux";
 import { Navigate } from "react-router-dom";
+import { RootStore } from "../store/store";
 
 const RequireAuth = ({ children }: { children: ReactNode }) => {
-  const jwt = localStorage.getItem("jwt");
-  console.log(jwt);
+  const jwt = useSelector((state: RootStore) => state.user.jwt);
 
   if (!jwt) {
     return <Navigate to='/auth/login' replace />;

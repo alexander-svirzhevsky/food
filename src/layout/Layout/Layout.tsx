@@ -2,12 +2,16 @@ import { NavLink, Outlet, useNavigate } from "react-router-dom";
 import cn from "classnames";
 import styles from "./Layout.module.css";
 import Button from "../../components/Button/Button";
+import { useDispatch } from "react-redux";
+import { AppDispatch } from "../../store/store";
+import { userActions } from "../../store/user.slice";
 
 const Layout = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch<AppDispatch>();
 
   const onExitClick = () => {
-    localStorage.removeItem("jwt");
+    dispatch(userActions.removeJwt());
     navigate("/auth/login");
   };
 
