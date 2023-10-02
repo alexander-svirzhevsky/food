@@ -3,6 +3,8 @@ import { getToken } from "./storage";
 import { BASE_URL } from "../helpers/API";
 import { ResponsI } from "../interfaces/login.interface";
 import axios, { AxiosError } from "axios";
+import { Profile } from "../interfaces/profile.interface";
+import { RootStore } from "./store";
 
 export const JWT_STATE = "userData"
 
@@ -13,6 +15,7 @@ interface UserPersistentState {
 interface UserState {
   jwt: string | null;
   errorMessage?: string;
+  profile?: Profile;
 }
 
 const initialState: UserState = {
@@ -25,6 +28,40 @@ export const login = createAsyncThunk('user/login', async (params: { email: stri
       email: params.email,
       password: params.password,
     });
+
+    return data;
+  } catch (e) {
+    if (e instanceof AxiosError) {
+      throw new Error(e.response?.data.message)
+    }
+  }
+})
+
+export const getProfile = createAsyncThunk<Profile, void, { state: RootStore }>("user/getProfile", async (_, thunkApi) => {
+  const jwt = thunkApi.getState().user.jwt;
+
+  const { data } = await axios.get<Profile>(`${BASE_URL}/user/profile`, {
+    headers: {
+      Authorization: `Bearer ${jwt}`
+    }
+  })
+
+  return data;
+})
+
+interface registerParams {
+  email: string;
+  password: string;
+  name: string
+}
+
+export const register = createAsyncThunk("user/register", async ({ email, password, name }: registerParams) => {
+  try {
+    const { data } = await axios.post<ResponsI>(`${BASE_URL}/auth/register`, {
+      email,
+      password,
+      name
+    })
 
     return data;
   } catch (e) {
@@ -54,6 +91,18 @@ const userSlice = createSlice({
         state.jwt = action.payload.access_token
       })
       .addCase(login.rejected, (state, action) => {
+        state.errorMessage = action.error.message
+      })
+      .addCase(getProfile.fulfilled, (state, action) => {
+        state.profile = action.payload;
+      })
+      .addCase(register.fulfilled, (state, action) => {
+        if (!action.payload) {
+          return
+        }
+        state.jwt = action.payload.access_token
+      })
+      .addCase(register.rejected, (state, action) => {
         state.errorMessage = action.error.message
       })
   }
