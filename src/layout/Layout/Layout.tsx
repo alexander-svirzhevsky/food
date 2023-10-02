@@ -11,6 +11,7 @@ const Layout = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch<AppDispatch>();
   const profile = useSelector((state: RootStore) => state.user.profile);
+  const products = useSelector((state: RootStore) => state.basket.items);
 
   const onExitClick = () => {
     dispatch(userActions.removeJwt());
@@ -56,6 +57,7 @@ const Layout = () => {
             <img src='/cart-icon.svg' alt='Bakset icon' />
             Basket
           </NavLink>
+          {products.reduce((acc, item) => (acc += item.count), 0)}
         </div>
         <Button onClick={onExitClick} className={styles["exit"]}>
           <img src='/exit-icon.svg' alt='Exit icon' />

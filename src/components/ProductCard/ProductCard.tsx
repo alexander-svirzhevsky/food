@@ -1,5 +1,8 @@
 import { Link } from "react-router-dom";
 import styles from "./ProductCard.module.css";
+import { useDispatch } from "react-redux";
+import { AppDispatch } from "../../store/store";
+import { basketActions } from "../../store/basket.slice";
 
 export interface ProductCardProps {
   id: number;
@@ -18,6 +21,13 @@ function ProductCard({
   price,
   rating,
 }: ProductCardProps) {
+  const dispatch = useDispatch<AppDispatch>();
+
+  const onAddToBasketClick = (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+    dispatch(basketActions.addProduct(id));
+  };
+
   return (
     <Link to={`/product/${id}`} className={styles["link"]}>
       <div className={styles["card"]}>
@@ -29,7 +39,10 @@ function ProductCard({
             {price}&nbsp;
             <span className={styles["currency"]}>₽</span>
           </div>
-          <button className={styles["add-to-cart"]}>
+          <button
+            className={styles["add-to-cart"]}
+            onClick={onAddToBasketClick}
+          >
             <img src='/cart-button-icon.svg' alt='Add to basket' />
           </button>
           <div className={styles["rating"]}>

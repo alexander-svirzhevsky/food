@@ -17,6 +17,7 @@ const Login = () => {
   const onSubmit = async (e: FormEvent) => {
     e.preventDefault();
     dispatch(userActions.clearError());
+
     const { email, password } = e.target as typeof e.target & LoginI;
     await sendData(email.value, password.value);
   };
