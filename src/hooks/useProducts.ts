@@ -8,7 +8,7 @@ const useProducts = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  const getProducts = async () => {
+  const getProducts = async (searchText: string) => {
     try {
       setIsLoading(true);
       await new Promise<void>((res) => {
@@ -16,7 +16,12 @@ const useProducts = () => {
           res();
         }, 2000);
       });
-      const { data } = await axios.get<ProductI[]>(`${BASE_URL}/products`);
+
+      const { data } = await axios.get<ProductI[]>(`${BASE_URL}/products`, {
+        params: {
+          name: searchText
+        }
+      });
       setProducts(data);
     } catch (error) {
       if (error instanceof AxiosError) {

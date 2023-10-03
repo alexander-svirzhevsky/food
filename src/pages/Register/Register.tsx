@@ -54,7 +54,7 @@ const Register = () => {
             type='password'
           />
           <Input
-            name='user-name'
+            name='name'
             labelText='Your name'
             placeholder='User name'
             type='text'

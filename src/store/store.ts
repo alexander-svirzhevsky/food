@@ -1,7 +1,7 @@
 import { configureStore } from "@reduxjs/toolkit";
-import userSlice, { JWT_STATE } from "./user.slice";
-import { saveToken } from "./storage";
-import basketSlice from "./basket.slice";
+import userSlice, { JWT_PEPSISTENT_STATE } from "./user.slice";
+import { saveState } from "./storage";
+import basketSlice, { BASKET_PEPSISTENT_STATE } from "./basket.slice";
 
 
 export const store = configureStore({
@@ -12,7 +12,8 @@ export const store = configureStore({
 })
 
 store.subscribe(() => {
-  saveToken({ jwt: store.getState().user.jwt }, JWT_STATE)
+  saveState({ jwt: store.getState().user.jwt }, JWT_PEPSISTENT_STATE);
+  saveState(store.getState().basket, BASKET_PEPSISTENT_STATE)
 })
 
 export type RootStore = ReturnType<typeof store.getState>

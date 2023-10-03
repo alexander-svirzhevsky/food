@@ -1,12 +1,12 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { getToken } from "./storage";
+import { getState } from "./storage";
 import { BASE_URL } from "../helpers/API";
 import { ResponsI } from "../interfaces/login.interface";
 import axios, { AxiosError } from "axios";
 import { Profile } from "../interfaces/profile.interface";
 import { RootStore } from "./store";
 
-export const JWT_STATE = "userData"
+export const JWT_PEPSISTENT_STATE = "userData"
 
 interface UserPersistentState {
   jwt: string
@@ -19,7 +19,7 @@ interface UserState {
 }
 
 const initialState: UserState = {
-  jwt: getToken<UserPersistentState>(JWT_STATE)?.jwt ?? null
+  jwt: getState<UserPersistentState>(JWT_PEPSISTENT_STATE)?.jwt ?? null
 }
 
 export const login = createAsyncThunk('user/login', async (params: { email: string, password: string }) => {

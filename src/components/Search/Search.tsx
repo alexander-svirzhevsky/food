@@ -1,8 +1,8 @@
-import { InsHTMLAttributes } from "react";
+import { InputHTMLAttributes } from "react";
 import cn from "classnames";
 import styles from "./Search.module.css";
 
-interface SearchProps extends InsHTMLAttributes<HTMLInputElement> {}
+interface SearchProps extends InputHTMLAttributes<HTMLInputElement> {}
 
 const Search = ({ ...rest }: SearchProps) => {
   return (

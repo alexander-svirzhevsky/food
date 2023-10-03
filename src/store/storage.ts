@@ -1,4 +1,4 @@
-export const getToken = <T>(key: string): T | null => {
+export const getState = <T>(key: string): T | null => {
   try {
     const jsonData = localStorage.getItem(key);
     if (!jsonData) {
@@ -12,6 +12,6 @@ export const getToken = <T>(key: string): T | null => {
   }
 }
 
-export const saveToken = <T>(state: T, key: string) => {
+export const saveState = <T>(state: T, key: string) => {
   localStorage.setItem(key, JSON.stringify(state))
 }
