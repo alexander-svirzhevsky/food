@@ -22,3 +22,11 @@
   font-size: 15px;
   width: 248px;
 }
+
+.button:disabled {
+  opacity: 0.5;
+}
+
+.button:disabled:hover {
+  background-color: var(--primary);
+}

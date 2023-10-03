@@ -19,6 +19,9 @@ const basketSlice = createSlice({
   name: 'basket',
   initialState,
   reducers: {
+    clear(state) {
+      state.items = []
+    },
     deleteProduct(state, action: PayloadAction<number>) {
       state.items = state.items.filter(i => i.id !== action.payload)
     },
